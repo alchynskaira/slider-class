@@ -1,0 +1,92 @@
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+.body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin:0;
+    padding:0;
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+#container {
+    max-width: 600px;
+    max-height: 500px;
+    display: flex;
+    justify-content: center;
+
+}
+
+.image-list {
+    position: relative;
+    display: flex;
+    padding: 0;
+    list-style: none;
+}
+
+.slide-img {
+    max-width: 600px;
+    max-height: 500px;
+    margin:0;
+}
+
+.button {
+    border: none;
+    outline: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.fa-arrow-left,
+.fa-arrow-right {
+    color: white;
+    border: solid #fff;
+    border-width: 0 4px 4px 0;
+    display: inline-block;
+    padding: 10px;
+    transition: transform 0.3s ease-out;
+    outline: none;
+}
+
+.fas {
+    color: rgba(255,255,255, 0.5);
+    font-size: xx-large;
+}
+
+.right-btn{
+    position: absolute;
+    top: 230px;
+    right: 560px;
+    margin: auto -40px auto -40px;
+    width: 50px;
+    height: 50px;
+}
+
+.right-btn .fa-arrow-right {
+    transform: rotate(-45deg);
+}
+
+.left-btn{
+    position: absolute;
+    top: 230px;
+    left: 520px;
+    margin: auto -40px auto -2px;
+    width: 50px;
+    height: 50px;
+}
+
+.left-btn .fa-arrow-left {
+    transform: rotate(135deg);
+}
