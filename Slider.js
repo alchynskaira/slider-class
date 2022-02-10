@@ -10,25 +10,19 @@ const wrapper = document.getElementById("container");
 
 class Slider {
 
-    #direction;
+    direction;
     slides;
-
-    constructor(wrapper, pictures, direction, slides){
+    constructor(wrapper, pictures){
         this.wrapper = wrapper;
         this.pictures = pictures;
-        this.#direction = direction;
         this.startPosition = 0;
-        this.slides = slides;
 
-        this.#renderSlides(pictures);
-        this.dragStart()
-        this.dragEnd()
-        this.#addListenersDrag();
+        this.renderSlides(pictures);
+        this.addListenersDrag();
 
     }
 
-
-    #renderSlides(){
+    renderSlides(){
         const slider = document.createElement("div");
         slider.classList.add("slider");
         this.wrapper.append(slider);
@@ -49,21 +43,22 @@ class Slider {
             dotBox.innerHTML +=  this.createDot(index);
 
         });
+
         this.addEventToDots();
-        // this.#addListenersDrag();
-        this.#createButtonWrapper()
+        this.createButtonWrapper()
 
     }
 
-    #createButtonWrapper() {
+    createButtonWrapper() {
         const buttonWrapper = document.createElement("div");
         const sliderWrapper = document.querySelector(".slider");
         buttonWrapper.classList.add("button-wrapper");
         buttonWrapper.append(this.createButton(true, ["btn", "right-btn"]));
         buttonWrapper.append(this.createButton(false, ["btn", "left-btn"]));
         sliderWrapper.append(buttonWrapper);
-        buttonWrapper.querySelector(".right-btn").addEventListener("click", () => this.#switchSlides(true));
-        buttonWrapper.querySelector(".left-btn").addEventListener("click", () => this.#switchSlides(false));
+
+        buttonWrapper.querySelector(".right-btn").addEventListener("click", () => this.switchSlides(true));
+        buttonWrapper.querySelector(".left-btn").addEventListener("click", () => this.switchSlides(false));
     }
 
      createButton(isRight, btnClass) {
@@ -82,7 +77,7 @@ class Slider {
      addEventToDots() {
         const dots = document.getElementsByClassName('dot');
         for (let dot of dots) {
-            dot.addEventListener("click", () => this.#moveToSlide(dot));
+            dot.addEventListener("click", () => this.moveToSlide(dot));
         }
     }
 
@@ -92,7 +87,7 @@ class Slider {
 
     }
 
-    #moveToSlide(dot) {
+    moveToSlide(dot) {
         const slide = document.querySelector(".image-item.active");
         slide.classList.remove("active");
         const currentSlide = document.querySelector("[data-img-index='" + dot.dataset.dotIndex + "']");
@@ -100,7 +95,7 @@ class Slider {
         this.markDot(dot.dataset.dotIndex);
     }
 
-    #switchSlides(right) {
+    switchSlides(right) {
         const currentSlide = document.querySelector(".image-item.active");
         const currentSlideIndex = currentSlide.getAttribute('data-img-index');
         let nextSlideIndex = right ? parseInt(currentSlideIndex) + 1 : parseInt(currentSlideIndex) - 1;
@@ -119,35 +114,39 @@ class Slider {
         this.markDot(nextSlideIndex);
     }
 
-     #addListenersDrag () {
+     addListenersDrag () {
         this.slides = document.getElementById("image-list");
         this.slides.onmousedown = this.dragStart;
         this.slides.addEventListener('touchstart',  this.dragStart);
         this.slides.addEventListener('touchend', this.dragEnd);
-        this.slides.addEventListener('touchmove',  this.#dragAction);
+        this.slides.addEventListener('touchmove',  this.dragAction);
     }
 
-      dragStart(e){
+
+
+      dragStart = (e) => {
        e.preventDefault();
 
           document.onmouseup = this.dragEnd;
-          document.onmousemove = this.#dragAction;
+          document.onmousemove = this.dragAction;
     }
 
-     #dragAction (e) {
+     dragAction = (e) =>  {
+
         if (e.pageX < this.startPosition) {
             this.direction = "left";
+
         } else if (e.pageX > this.startPosition) {
             this.direction = "right";
         }
         this.startPosition = e.pageX;
     }
 
-    private dragEnd () {
+     dragEnd = () => {
         if (this.direction === 'right') {
-            this.#switchSlides(true);
+            this.switchSlides(true);
         } else {
-            this.#switchSlides(false);
+            this.switchSlides(false);
         }
 
         document.onmouseup = null;
